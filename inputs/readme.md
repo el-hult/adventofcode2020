@@ -1,0 +1,3 @@
+# Input Folder
+
+In this folder, I put the inputs. They are put in a file called `day1.txt` or whatever day it is...
