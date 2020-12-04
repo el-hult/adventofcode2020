@@ -2,6 +2,20 @@ This year has an AoC as well. https://adventofcode.com/2020
 
 I'll work in python 3.9 this time.
 
+# Day 4
+
+Today was a real pain. I used 
+```python
+pid = re.compile("[0-9]{9}").match(passport['pid'])
+```
+to find a 9 digit number. I should have used 
+```python
+pid = re.compile("^[0-9]{9}$").match(passport['pid'])
+```
+And that took me HOURS to figure out.
+
+Otherwise it was fun.
+
 # Day 3
 part a was simple and straight forward.
 
