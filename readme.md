@@ -12,9 +12,11 @@ to find a 9 digit number. I should have used
 ```python
 pid = re.compile("^[0-9]{9}$").match(passport['pid'])
 ```
-And that took me HOURS to figure out.
+And that took me HOURS to figure out. Otherwise it was fun.
 
-Otherwise it was fun.
+This error made it so that one single passport validated when it shouldn't. That passport had 10 digigts instead of 9, but the regex still matched. This error type was not present in the test data presented in the challenge. I even had to take a sneek peak in the solution of Thomas Aschan to see what went wrong.
+
+One learning is that I made my checked on the parsed data, and my errors was in parsing. So my error was not detectable...
 
 # Day 3
 part a was simple and straight forward.
