@@ -1,6 +1,17 @@
 This year has an AoC as well. https://adventofcode.com/2020
 
-I'll work in python 3.9 this time.
+I'll work in python 3.8 this time.
+
+# Day 5
+It seems the challenge of today was about understanding binary numbers.
+Given that, it was not very hard.
+
+I like the `itertools.starmap` and `map` functions, but I actually think a list comprehension would be more pythonic and readable.
+I guess I would revert to that if my code would fail me. 
+But as long as it works correctly on the first run, I guess there is no harm in writing it like this...
+
+To search for a missing boarding pass seat ID, I used set difference. That seemes like a fun way to do it. :) 
+It is definitely not the fastest way. I _should_ use the fact that we are working with a list of ints, in some way, so there should be a faster way to do it...
 
 # Day 4
 
