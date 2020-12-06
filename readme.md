@@ -2,6 +2,20 @@ This year has an AoC as well. https://adventofcode.com/2020
 
 I'll work in python 3.8 this time.
 
+## Timing
+To run all my solutions and see performance, run
+```powershell
+gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
+>> }
+```
+
+# Day 6
+This day was really easy, I think. It lent itself to iterator style programming.
+A lot of map-reduce kind of logic.
+When it nested in part B, I chose to change to an imperative style.
+
+I really like the `collections.Counter` method. It sure helps writing semantically clear code, and I think that it is helpful. It is maybe not the fastest, but what the heck. It is good enough!
+
 # Day 5
 It seems the challenge of today was about understanding binary numbers.
 Given that, it was not very hard.
