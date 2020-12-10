@@ -8,6 +8,11 @@ To run all my solutions and see performance, run
 gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
 ```
 
+
+# Day 8
+
+This was boring. Lind of like the good ol' bitcode computer from last year. Straight forward implementation.
+
 # Day 7
 
 Today was quite okay. But I still think it is a pain to write graph traversal algorithms. I understood already from partA that it made sense to parse the graph so it could be traversed in both directions.
