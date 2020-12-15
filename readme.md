@@ -8,6 +8,12 @@ To run all my solutions and see performance, run
 gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
 ```
 
+# Day 9
+Im curious why this is so easy. Just throwing itertools at the problem seems to do the trick. It is fast enough so there is no need to be clever here....
+
+The one curious bit is the `window` function that used to be part of the `itertools` recipies, but was deleted for the advancement of `pairwise`.
+I found a recipie online that I used instead. It was good enough (the direct generaliztion of `pairwise`)
+
 
 # Day 8
 
