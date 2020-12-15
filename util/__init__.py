@@ -21,7 +21,7 @@ def rolling(iterable, n=2):
 
 def flip(func):
     """Create a new function from the original with the arguments reversed
-    
+
     https://stackoverflow.com/a/9850282/4050510
     """
 
