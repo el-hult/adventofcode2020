@@ -1,6 +1,6 @@
 from itertools import combinations
 
-from util import read_input, window
+from util import read_input, rolling
 
 data = read_input(9)
 data = [int(line) for line in data.splitlines()]
@@ -23,7 +23,7 @@ searching = True
 m = 1
 while searching:
     m += 1
-    for k in window(data, m):
+    for k in rolling(data, m):
         s = sum(k)
         if s == ansA:
             ansB = min(k) + max(k)

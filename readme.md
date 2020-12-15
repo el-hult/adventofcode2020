@@ -8,6 +8,15 @@ To run all my solutions and see performance, run
 gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
 ```
 
+# Day 10
+
+In part (a), we can use the fact we must traverse the voltages in the order that is always taking the smallest step. So sorting them, taking the steps and counting what steps you take is enough. Very succint oneliner.
+
+In part (b) stuff was more difficult. To brute force it head on is not possible. I utilize that between all adapters there is a 1 or 3 volt difference. 
+If there is a 3 volt diff, I *have* to select both adapters. If there is a contigous chunk or 1 voltage drops, I can choose what adapters to include or not in this chunk, but not caring about how I chose in *other* contigous chunks. So the number of possible choices overall is the product of choices per chunk.
+
+The last part could be written in a super condensed oneliner, I think. Itertools for the win... But that would not be readable AT ALL. So I chose an imperative style, but with some iterator for loops at least.
+
 # Day 9
 Im curious why this is so easy. Just throwing itertools at the problem seems to do the trick. It is fast enough so there is no need to be clever here....
 
