@@ -59,17 +59,21 @@ assert ansA == 1521
 print(ansA)
 
 
-for position in range(len(program)):
-    prog2 = deepcopy(program)
-    if prog2[position][0] == instruction.jmp:
-        prog2[position] = instruction.nop, prog2[position][1]
-    elif prog2[position][0] == instruction.nop:
-        prog2[position] = instruction.jmp, prog2[position][1]
-    else:
-        continue
-    code, acc = run_program(prog2)
-    if code == exit_code.completed:
-        ansB = acc
-        break
-print(ansB)
+def process():
+    for position in range(len(program)):
+        prog2 = deepcopy(program)
+        if prog2[position][0] == instruction.jmp:
+            prog2[position] = instruction.nop, prog2[position][1]
+        elif prog2[position][0] == instruction.nop:
+            prog2[position] = instruction.jmp, prog2[position][1]
+        else:
+            continue
+        code, acc = run_program(prog2)
+        if code == exit_code.completed:
+            return acc
+    raise RuntimeError
+
+
+ansB = process()
 assert ansB == 1016
+print(ansB)
