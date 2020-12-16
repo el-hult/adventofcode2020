@@ -8,6 +8,31 @@ To run all my solutions and see performance, run
 gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
 ```
 
+# Day 13 
+
+Part A was silly simple. I don't get what was up with that...
+
+Part B is trickier. To take the example bus schedule from the instruction, we want to solve for the minimal `t` such that
+
+```python
+buses = [(0, 7), (1, 13), (4, 59), (6, 31), (7, 19)]
+for i,b in buses:
+  assert (t+i) % b == 0
+```
+After a lot of contemplation I realized all the times were coprime. (I also added an assert for that...)
+So that means we want to find a solution using the [Chinese Remainder Theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem) that I learned about in school ~8 years ago... 
+
+I implemented the method by sieving.
+
+I also need to recast the problem a bit.
+```python
+buses = [(0, 7), (1, 13), (4, 59), (6, 31), (7, 19)]
+for i,b in buses:
+  assert t % b == b-i
+```
+
+
+
 # Day 12
 
 Part a was cute and fun. I had some ideas about using a pure iterator-reducer style here. I think that will be a pain for part B, but I wanted that still. It went well after some spaghetti coding. 
