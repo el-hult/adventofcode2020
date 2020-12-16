@@ -48,9 +48,7 @@ def processB(input):
 assert processA(test_input) == 295
 ansA = processA(true_input)
 assert ansA == 2305
-print(ansA)
 
 assert processB(test_input) == 1068781
 ansB = processB(true_input)
 assert ansB == 552612234243498
-print(ansB)

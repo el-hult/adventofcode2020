@@ -56,7 +56,6 @@ def run_program(program):
 program = [parse_line(line) for line in read_input(8).splitlines()]
 code, ansA = run_program(program)
 assert ansA == 1521
-print(ansA)
 
 
 def process():
@@ -76,4 +75,4 @@ def process():
 
 ansB = process()
 assert ansB == 1016
-print(ansB)
+

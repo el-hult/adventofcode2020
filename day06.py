@@ -29,7 +29,6 @@ real_groups = read_input(6).split("\n\n")
 ansA = sum(
     len(set(char for char in group if char in ascii_lowercase)) for group in real_groups
 )
-print(ansA)
 assert 6680 == ansA
 
 ansB = 0
@@ -38,5 +37,4 @@ for group in real_groups:
     counter = Counter(char for char in group if char in ascii_lowercase)
     ansB += sum(val == size for val in counter.values())
 
-print(ansB)
 assert ansB == 3117

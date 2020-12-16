@@ -17,7 +17,6 @@ n3 = c.pop(3)
 ansA = n1 * n3
 assert ansA > 2628
 assert ansA == 2738
-print(ansA)
 
 
 assert len(c) == 0  # there were only 1-diff and 3-diff voltages!
@@ -34,4 +33,3 @@ for key, grp in groupby(diffs):
         n_combs *= comb_dict[grp_len]
 ansB = n_combs
 assert ansB == 74049191673856
-print(ansB)

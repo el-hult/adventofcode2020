@@ -108,8 +108,8 @@ assert all(parse_pass(pass2dict(line)) is not None for line in test_data3.split(
 
 
 s1 = sum(pass2dict(line) is not None for line in data.split("\n\n"))
-assert s1 == 233
-print("Part A:", s1)
+ansA = s1
+assert ansA == 233
 
 dicted_passes = [pass2dict(line) for line in data.split("\n\n")]
 passes_with_values = [p for p in dicted_passes if p is not None]
@@ -135,6 +135,7 @@ assert all(
     for hcl in map(itemgetter("hcl"), valid_passes)
 )
 
-print(len(valid_passes))
-assert len(valid_passes) < 112
-assert len(valid_passes) == 111
+
+ansB = len(valid_passes)
+assert ansB < 112
+assert ansB == 111

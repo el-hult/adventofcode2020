@@ -16,7 +16,6 @@ for k in range(preamble_len, len(data)):
 
 assert ansA != 35
 assert ansA == 400480901
-print(ansA)
 
 
 searching = True
@@ -32,4 +31,3 @@ while searching:
 
 assert ansB < 800961802
 assert ansB == 67587168
-print(ansB)

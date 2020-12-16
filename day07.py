@@ -84,7 +84,5 @@ bag_graph = get_bag_map(read_input(7))
 ansA = solve_a(bag_graph)
 assert ansA < 303
 assert ansA == 229
-print(ansA)
 ansB = solve_b(bag_graph)
-print(ansB)
 assert ansB == 6683

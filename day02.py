@@ -21,5 +21,7 @@ def valid_b(first, second, letter, pwd):
 if __name__ == "__main__":
     re = compile(r"(\d+)-(\d+) ([a-z]): (.+)")
     input = [parseline(i, re) for i in read_input(2).splitlines()]
-    print(sum(int(valid_a(*line)) for line in input))
-    print(sum(int(valid_b(*line)) for line in input))
+    ansA = sum(int(valid_a(*line)) for line in input)
+    ansB = sum(int(valid_b(*line)) for line in input)
+    assert ansA == 447
+    assert ansB == 249

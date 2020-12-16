@@ -19,5 +19,3 @@ ans_b = prod(
 
 assert ans_a == 153
 assert ans_b == 2421944712
-print(ans_a)
-print(ans_b)

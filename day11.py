@@ -38,14 +38,6 @@ def ray(r, c, h, w, dir):
         c = c + dir[1]
 
 
-def print_state(d, h, w):
-    """Helper used in debugging"""
-    for r in range(h):
-        for c in range(w):
-            print(d[(r, c)], end="")
-        print("")
-
-
 def process(mode, input):
 
     data = {
@@ -86,8 +78,6 @@ def process(mode, input):
                 state_next[(r, c)] = state_now[(r, c)]
         state_now = state_next
         state_next = defaultdict(lambda: ".")
-        # print("\n\n\n\n\n\n")
-        # print_state(state_now, h, w)
     return sum(1 for k, v in state_now.items() if v == "#")
 
 
@@ -97,8 +87,6 @@ assert process("B", test_input) == 26
 ansA = process("A", true_input)
 assert ansA > 2189
 assert ansA == 2247
-print(ansA)
 
 ansB = process("B", true_input)
 assert ansB == 2011
-print(ansB)

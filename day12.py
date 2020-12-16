@@ -83,12 +83,10 @@ def process(input, mode):
 def main():
     assert process(test_input, "A") == 25
     ansA = process(true_input, "A")
-    print(ansA)
     assert ansA == 1482
 
     assert process(test_input, "B") == 286
     ansB = process(true_input, "B")
-    print(ansB)
     assert ansB == 48739
 
 

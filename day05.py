@@ -37,7 +37,6 @@ seen_boarding_pass_seat_ids = list(
 )
 ansA = max(seen_boarding_pass_seat_ids)
 assert ansA == 901
-print(ansA)
 
 all_valid_seats = set(
     range(min(seen_boarding_pass_seat_ids), max(seen_boarding_pass_seat_ids) + 1)
@@ -45,4 +44,3 @@ all_valid_seats = set(
 not_seet_seat_ids = all_valid_seats - set(seen_boarding_pass_seat_ids)
 (ansB,) = not_seet_seat_ids
 assert ansB == 661
-print(ansB)
