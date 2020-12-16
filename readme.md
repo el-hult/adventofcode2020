@@ -8,6 +8,16 @@ To run all my solutions and see performance, run
 gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=[math]::Round((Measure-Command {python $_}).TotalMilliseconds)}}
 ```
 
+Running the same program a few times to get an average is also simple:
+```
+ 1..10 | %{Measure-Command {python day11.py} }| measure -Property TotalMilliseconds -Average
+ ```
+
+Also - to get some better insight into some specific day and shy it runs slow, run 
+```powershell
+python -m cProfile day11.py
+```
+
 # Day 13 
 
 Part A was silly simple. I don't get what was up with that...
@@ -33,7 +43,7 @@ So that means we want to find a solution using the [Chinese Remainder Theorem](h
 
 I implemented the method by sieving described on wikipedia.
 
-**Remark:** When solving this problem I had a huge detour into rewriting the problem as a linear Diophantine system. That is also described a little in Wikipedia, so it is a possible angle to attack hte problem. But less efficient. And more complicated. The sieving is fast enough!
+**Remark:** When solving this problem I had a huge detour into rewriting the problem as a linear Diophantine system. That is also described a little in Wikipedia, so it is a possible angle to attack the problem. But less efficient. And more complicated to code. The sieving is fast enough!
 
 
 # Day 12
@@ -57,9 +67,12 @@ d[imax+1] = 1 # now we cannot loop over the keys, but need to use the keys from 
 for i in range(imax): # iterate over the original keys
   do_stuff(d[i])
 ```
-In this case, since `range()` never reaches the end index you skip the last entry in 
+In this case, since `range()` never reaches the end index you skip the last entry in the array. But otherwise part A was nice and easy.
 
 Part B proved no logical problem. A misread about whether to look at the next *seat* or the next *occupied seat* in each direction. But it was fine after fixing that logical mistake. My solution is very slow though... I guess that is because of the generator overhead everywhere. But that is fine still. A few seconds...
+
+**Remark** Okay I did go back and run a profiler. It is indeed the generator overhead that is the bad thing here. 😞 So I would need some simpler logic (more imperative?!) to make this go faster. I had to remove my whole `ray` logic, that I thought was clever. By using the same logic - but not with a lot of generator expressions - cut the runtime in half or so. To go further, I probably need to do more clever things such as precomputing what the "neighboring seats" are for each seat according to the 'real' topology of the map, or according to the 'line-of-sight-tolopoly'. This way there will be a few hash map lookups to count the neighbors, instead of... a lot.
+
 
 # Day 10
 
