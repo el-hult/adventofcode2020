@@ -5,7 +5,7 @@ I'll work in python 3.8 this time.
 ## Timing
 To run all my solutions and see performance, run
 ```powershell
-gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
+gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=[math]::Round((Measure-Command {python $_}).TotalMilliseconds)}}
 ```
 
 # Day 13 
