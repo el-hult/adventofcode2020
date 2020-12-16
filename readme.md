@@ -19,18 +19,21 @@ buses = [(0, 7), (1, 13), (4, 59), (6, 31), (7, 19)]
 for i,b in buses:
   assert (t+i) % b == 0
 ```
-After a lot of contemplation I realized all the times were coprime. (I also added an assert for that...)
-So that means we want to find a solution using the [Chinese Remainder Theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem) that I learned about in school ~8 years ago... 
 
-I implemented the method by sieving.
+First make a small recasting to 
 
-I also need to recast the problem a bit.
 ```python
-buses = [(0, 7), (1, 13), (4, 59), (6, 31), (7, 19)]
 for i,b in buses:
-  assert t % b == b-i
+  a = -i % b
+  assert t % b == a
 ```
 
+After a lot of contemplation I realized all the `b` are pairwise coprime!
+So that means we want to find a solution using the [Chinese Remainder Theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem) that I learned about in school ~8 years ago... 
+
+I implemented the method by sieving described on wikipedia.
+
+**Remark:** When solving this problem I had a huge detour into rewriting the problem as a linear Diophantine system. That is also described a little in Wikipedia, so it is a possible angle to attack hte problem. But less efficient. And more complicated. The sieving is fast enough!
 
 
 # Day 12
