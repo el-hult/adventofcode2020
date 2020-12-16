@@ -1,4 +1,4 @@
-from functools import reduce
+from functools import reduce, partial
 
 from util import read_input
 
@@ -16,64 +16,80 @@ def mahnattan(r, c):
     return abs(r) + abs(c)
 
 
-cardinal = "ENWS"  # mapping from direction int to cardinal direction name
+cardinals = {"E": (1, 0), "N": (0, 1), "W": (-1, 0), "S": (0, -1)}
 
 
-def navigate(state, instruction):
-    if instruction[0] == "F":
-        translation_instruction = (cardinal[state[2]], instruction[1])
-        return translate(state, translation_instruction)
-    elif instruction[0] in "NSEW":
-        return translate(state, instruction)
-    elif instruction[0] in "RL":
-        return rotate(state, instruction)
-    else:
-        raise ValueError(f"Cannot handle instruction {instruction}")
-
-
-def translate(state, instruction):
-    ew, ns, dir = state
-    action, val = instruction
-    if action == "N":
-        return (ew, ns + val, dir)
-    elif action == "W":
-        return (ew - val, ns, dir)
-    elif action == "S":
-        return (ew, ns - val, dir)
-    elif action == "E":
-        return (ew + val, ns, dir)
+def navigate(state, instruction, mode):
+    ship_pos = state[:2]
+    wp_pos = state[2:]
+    action = instruction[0]
+    argument = instruction[1]
+    if action == "F":
+        return (*translate(ship_pos, wp_pos, argument), *wp_pos)
+    elif action in cardinals.keys() and mode == "A":
+        return (
+            *translate(ship_pos, cardinals[action], argument),
+            *wp_pos,
+        )
+    elif action in cardinals.keys() and mode == "B":
+        return (
+            *ship_pos,
+            *translate(wp_pos, cardinals[action], argument),
+        )
+    elif action in "RL":
+        return (*ship_pos, *rotate(wp_pos, action, argument))
     else:
         raise ValueError
 
 
-def rotate(state, instruction):
-    ew, ns, dir = state
-    action, val = instruction
+def translate(coord1: tuple, coord2: tuple, val: int) -> tuple:
+    return (
+        coord1[0] + val * coord2[0],
+        coord1[1] + val * coord2[1],
+    )
+
+
+def rotate(pos, action, argument):
+    """Rotate a 2d point in the plane around the origin"""
     if action == "R":
-        return ew, ns, (dir + (-val // 90)) % 4
+        n_ccw = (-argument // 90) % 4
     elif action == "L":
-        return ew, ns, (dir + (val // 90)) % 4
+        n_ccw = (argument // 90) % 4
     else:
         raise ValueError
 
+    x, y = pos
+    if n_ccw == 0:
+        return pos
+    elif n_ccw == 1:
+        return -y, x
+    elif n_ccw == 2:
+        return -x, -y
+    elif n_ccw == 3:
+        return y, -x
+    else:
+        raise RuntimeError
 
-def process(input):
+
+def process(input, mode):
     instructions = ((s[0], int(s[1:])) for s in input.splitlines())
-    state = (
-        0,
-        0,
-        0,
-    )  # state is east/west, north/south, and direction (east=0,north=1,west=2,south=3)
-    ew, ns, _ = reduce(navigate, instructions, state)
+    initial_state = {"A": (0, 0, 1, 0,), "B": (0, 0, 10, 1,)}
+    ew, ns, _, _ = reduce(
+        partial(navigate, mode=mode), instructions, initial_state[mode]
+    )
     return mahnattan(ew, ns)
 
 
 def main():
-    assert process(test_input) == 25
-
-    ansA = process(true_input)
+    assert process(test_input, "A") == 25
+    ansA = process(true_input, "A")
     print(ansA)
     assert ansA == 1482
+
+    assert process(test_input, "B") == 286
+    ansB = process(true_input, "B")
+    print(ansB)
+    assert ansB == 48739
 
 
 if __name__ == "__main__":

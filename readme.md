@@ -8,6 +8,17 @@ To run all my solutions and see performance, run
 gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
 ```
 
+# Day 12
+
+Part a was cute and fun. I had some ideas about using a pure iterator-reducer style here. I think that will be a pain for part B, but I wanted that still. It went well after some spaghetti coding. 
+
+Part B needed a little reriting. Specifically, since it works with another state variable structure, It needs a separate handler.
+I wanter to also use the elementary `translate` and `rotate` in all the code, so I made some rewriting of the previous code to facilitate that. I also spent some time cleaning up the code in the end.
+
+The unifying idea is tha a facing direction can be thought of as having a waypoint in front of the face, and rotation of the waypoint and rotation of the ship is the same thing. Please look at the separate git commits to compare!
+
+In the end, I was quite happy with the amount of code reuse and so on. :)
+
 # Day 11
 
 I made an off-by-one error here. Here is a quite contrived examlpe that shows the problem:
