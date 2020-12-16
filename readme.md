@@ -8,6 +8,20 @@ To run all my solutions and see performance, run
 gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=(Measure-Command {python $_}).Milliseconds}}
 ```
 
+# Day 11
+
+I made an off-by-one error here. Here is a quite contrived examlpe that shows the problem:
+
+```python
+imax = max(d.keys()) # save what the largest key is
+d[imax+1] = 1 # now we cannot loop over the keys, but need to use the keys from before..
+for i in range(imax): # iterate over the original keys
+  do_stuff(d[i])
+```
+In this case, since `range()` never reaches the end index you skip the last entry in 
+
+Part B proved no logical problem. A misread about whether to look at the next *seat* or the next *occupied seat* in each direction. But it was fine after fixing that logical mistake. My solution is very slow though... I guess that is because of the generator overhead everywhere. But that is fine still. A few seconds...
+
 # Day 10
 
 In part (a), we can use the fact we must traverse the voltages in the order that is always taking the smallest step. So sorting them, taking the steps and counting what steps you take is enough. Very succint oneliner.
