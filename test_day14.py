@@ -58,16 +58,16 @@ class TestProcessB(unittest.TestCase):
 
 class TestCollisions(unittest.TestCase):
     def test_abc(self):
-        self.assertEqual(find_collide("0", "1", 1), (CollisionResult.disjoint, -1, -1))
-        self.assertEqual(find_collide("1", "1", 1), (CollisionResult.supset, -1, -1))
-        self.assertEqual(find_collide("X1", "11", 2), (CollisionResult.supset, 0, -1))
-        self.assertEqual(find_collide("11", "X1", 2), (CollisionResult.subset, -1, 0))
+        self.assertEqual(find_collide("0", "1", 1), (CollisionResult.disjoint, -1))
+        self.assertEqual(find_collide("1", "1", 1), (CollisionResult.full_cover, -1))
+        self.assertEqual(find_collide("X1", "11", 2), (CollisionResult.full_cover, -1))
         self.assertEqual(
-            find_collide("1X", "X1", 2), (CollisionResult.intersects, 1, 0)
+            find_collide("11", "X1", 2), (CollisionResult.partial_cover, 0)
+        )
+        self.assertEqual(
+            find_collide("1X", "X1", 2), (CollisionResult.partial_cover, 0)
         )
 
 
 if __name__ == "__main__":
-    # unittest.main()
-    TestCollisions().test_abc()
-    TestProcessB().test_fuu()
+    unittest.main()
