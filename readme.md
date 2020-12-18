@@ -2,6 +2,18 @@ This year has an AoC as well. https://adventofcode.com/2020
 
 I'll work in python 3.8 this time.
 
+
+## Before commit
+
+Make sure all code runs, and there is no ugly output.
+
+```
+flake8
+black .
+python -m unittest
+gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=[math]::Round((Measure-Command {python $_}).TotalMilliseconds)}}
+```
+
 ## Timing
 To run all my solutions and see performance, run
 ```powershell
@@ -17,6 +29,32 @@ Also - to get some better insight into some specific day and shy it runs slow, r
 ```powershell
 python -m cProfile day11.py
 ```
+
+## Testing
+At day 14 I needed to run some test code... I do that with `unittest` and standard code convenstions so that `python -m unittest` does the discovery alright.
+
+I have also added the 
+```
+if __name__ == "__main__":
+    unittest.main()
+```
+code so that `python test_dayXX.py` works for running a single file (very nice if your IDE has a 'run this file' feature').
+
+# Day 14
+
+Part A was a simple thing. I realized bit operations would make this fast and simple, so I read a line or two on wikipedia and implemented a fast solver. Piece of cake.
+
+Part B is a different beast however...
+
+So my first attempt was to write a super complicated code that has memory adresses with X's in them, so that one adress refers to may places in memory. The downside is that the older writes may have overlaps with the new memory write instruction, thus needing complicated logic to resolve these conflicts. At my first attempt it did not get right (also worth mentioning is that the bugs I created and found before submitting the answer were numerous.)
+
+After the first bad submssion, I realized I only corrected single-position collisions. That was fixed quite quickly by adding more test cases. Implementing some not-so-clever logic to repeatedly apply the splitting logic fixed the problem.
+
+This challance was BY FAR harder than the others.
+
+I guess one could brute force part B as well. I didn't even try that. In the end my memory had 1285 records in it. I claim that is quite okay. It is much better than implementing the whole 36 bit memory that should hold 36 bit ints. That would need 36*36=1296 bits in total, so I guess that is acceptable. If I had contigous memory access that would be all okay. But I feel there is a huge risk that the overhead of python will prevent a brute force ``attack''.
+
+Im happy I'm done for now.
 
 # Day 13 
 

@@ -75,4 +75,3 @@ def process():
 
 ansB = process()
 assert ansB == 1016
-
