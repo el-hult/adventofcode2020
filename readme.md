@@ -56,6 +56,9 @@ I guess one could brute force part B as well. I didn't even try that. In the end
 
 Im happy I'm done for now.
 
+...okay I ran the linter with check for complexity. And due to that I've now extracted some stuff into a separate function and such cleanup. Feels much better now. :)
+
+
 # Day 13 
 
 Part A was silly simple. I don't get what was up with that...
