@@ -1,5 +1,4 @@
 import re
-from operator import itemgetter
 from util import read_input
 
 test_data1 = """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
@@ -58,22 +57,25 @@ def pass2dict(passport: str) -> dict:
         return None
 
 
-def parse_pass(passport: dict):
+def parse_year(s: str, min: int, max: int) -> int:
+    i = int(s)
+    if min <= i <= max:
+        return i
+    else:
+        raise ValueError
+
+
+def parse_passport(passport: dict) -> dict:
+    """Takes a dict with string values and gives them types"""
     try:
-        passport["byr"] = int(passport["byr"])
-        passport["iyr"] = int(passport["iyr"])
-        passport["eyr"] = int(passport["eyr"])
+        passport["byr"] = parse_year(passport["byr"], 1920, 2002)
+        passport["iyr"] = parse_year(passport["iyr"], 2010, 2020)
+        passport["eyr"] = parse_year(passport["eyr"], 2020, 2030)
         hgt = re.compile("^([0-9]+)(cm|in)$").match(passport["hgt"])
         hcl = re.compile("^#[0-9a-f]{6}$").match(passport["hcl"])
         ecl = passport["ecl"]
         pid = re.compile("^[0-9]{9}$").match(passport["pid"])
 
-        if not (1920 <= passport["byr"] <= 2002):
-            raise ValueError("bad byr")
-        if not (2010 <= passport["iyr"] <= 2020):
-            raise ValueError("bad iyr")
-        if not (2020 <= passport["eyr"] <= 2030):
-            raise ValueError("bad eyr")
         if ecl not in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]:
             raise ValueError("bad ecl")
         if hgt:
@@ -103,8 +105,10 @@ def parse_pass(passport: dict):
 # Test data
 #
 assert sum(pass2dict(line) is not None for line in test_data1.split("\n\n")) == 2
-assert all(parse_pass(pass2dict(line)) is None for line in test_data2.split("\n\n"))
-assert all(parse_pass(pass2dict(line)) is not None for line in test_data3.split("\n\n"))
+assert all(parse_passport(pass2dict(line)) is None for line in test_data2.split("\n\n"))
+assert all(
+    parse_passport(pass2dict(line)) is not None for line in test_data3.split("\n\n")
+)
 
 
 s1 = sum(pass2dict(line) is not None for line in data.split("\n\n"))
@@ -113,28 +117,8 @@ assert ansA == 233
 
 dicted_passes = [pass2dict(line) for line in data.split("\n\n")]
 passes_with_values = [p for p in dicted_passes if p is not None]
-validation_results = [parse_pass(p) for p in passes_with_values]
+validation_results = [parse_passport(p) for p in passes_with_values]
 valid_passes = [p for p in validation_results if p is not None]
-assert all(1920 <= byr <= 2002 for byr in map(itemgetter("byr"), valid_passes))
-assert all(2010 <= iyr <= 2020 for iyr in map(itemgetter("iyr"), valid_passes))
-assert all(2020 <= eyr <= 2030 for eyr in map(itemgetter("eyr"), valid_passes))
-assert all(
-    ecl in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
-    for ecl in map(itemgetter("ecl"), valid_passes)
-)
-assert all(
-    (unit == "cm" and 150 <= val <= 193) or (unit == "in" and 59 <= val <= 76)
-    for val, unit in map(itemgetter("hgt"), valid_passes)
-)
-assert all(
-    len(pid) == 9 and 0 <= int(pid) < 1e9
-    for pid in map(itemgetter("pid"), valid_passes)
-)
-assert all(
-    hcl[0] == "#" and all(i in "0123456789abcdef" for i in hcl[1:]) and len(hcl) == 7
-    for hcl in map(itemgetter("hcl"), valid_passes)
-)
-
 
 ansB = len(valid_passes)
 assert ansB < 112
