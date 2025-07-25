@@ -30,9 +30,12 @@ uvx python -m unittest
 # Reflections on each day
 
 # Day 15
-I quite naive solution was fast enough on my hardware. It takes 5 seconds to run at time of writing for part 1 and part 2. The only optimization I did was to have a hashmap of "last spoken when" to avoid keeping this full history in memory a doing slow linear searches in that.
+I quite naive solution was fast enough on my hardware. It takes 6 seconds to run at time of writing for part 1 and part 2. The only optimization I did was to have a hashmap of "last spoken when" to avoid keeping this full history in memory a doing slow linear searches in that.
 
 The hashmap feels like it should be slow though, with much overhead. Can we try other data structures instead?
+
+Moving to a list instead made the runtime go to 3.6 seconds instead of 6.1 seconds.
+My insight was that the numbers can never be larger than the number of turns I want to check for, so I can allocate all memory in the beginning, and do array lookups instead of hashmap lookups.
 
 
 # Day 14

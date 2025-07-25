@@ -3,19 +3,22 @@ from util import read_input
 
 def processA(input,to_report=2020):
     starting_numbers = tuple(map(int, input.split(',')))
-    last_turn_this_was_spoken = {num: idx + 1 for idx, num in enumerate(starting_numbers[:-1])} # dont include the last number. it gets special treatment.
+    last_turn_this_was_spoken = [-1] * (to_report + 1) # use a list to avoid dict overhead
+    for idx, num in enumerate(starting_numbers[:-1]):
+        last_turn_this_was_spoken[num] = idx + 1
     prev_unumber = starting_numbers[-1]
 
     # first round is special
     current_turn = len(starting_numbers) + 1
     while current_turn <= to_report:
-        if prev_unumber in last_turn_this_was_spoken:
-            # spoken before, calculate age
-            last_turn = last_turn_this_was_spoken[prev_unumber]
-            current_number = current_turn - last_turn - 1 
-        else:
+        last_turn = last_turn_this_was_spoken[prev_unumber]
+        if last_turn == -1:
             # first time spoken
             current_number = 0
+        else:
+            # spoken before, calculate age
+            current_number = current_turn - last_turn - 1 
+            
         
         # update the last turn this number was spoken
         last_turn_this_was_spoken[prev_unumber] = current_turn -1

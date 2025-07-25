@@ -3,3 +3,5 @@ inputs/day*
 __pycache__
 
 .vscode
+
+profile*
