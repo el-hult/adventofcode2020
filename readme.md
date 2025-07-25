@@ -1,44 +1,33 @@
 This year has an AoC as well. https://adventofcode.com/2020
 
-I'll work in python 3.8 this time.
+I'll work in python 3.12 this time.
+formatting and linting with `uvx ruff format`
 
+# Running
+Download the inputs using curl if you first get a session cookie e.g. from the browser.
 
-## Before commit
-
-Make sure all code runs, and there is no ugly output.
-
-```
-flake8
-black .
-python -m unittest
-gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=[math]::Round((Measure-Command {python $_}).TotalMilliseconds)}}
+```bash
+for i in $(seq 1 24); do j=$(printf "%02d" $i); curl --cookie "session=somelongvalueforthesessioncookie" "https://adventofcode.com/2020/day/$i/input" -o day$j.txt; done
 ```
 
-## Timing
-To run all my solutions and see performance, run
-```powershell
-gci day*.py | %{ new-object PSCustomObject -Property  @{file=$_.Name;runtime_millis=[math]::Round((Measure-Command {python $_}).TotalMilliseconds)}}
+Then run code using e.g. `uv run day01.py`. It should be silent if it is correct to my output.
+
+If you want timing for each run, in bash you can run
+```
+for f in day*.py; do t=$( { time uv run "$f" >/dev/null; } 2>&1 | grep real | awk '{print $2}'); echo -e "$f\t$t"; done
 ```
 
-Running the same program a few times to get an average is also simple:
-```
- 1..10 | %{Measure-Command {python day11.py} }| measure -Property TotalMilliseconds -Average
- ```
+# Before commit
 
-Also - to get some better insight into some specific day and shy it runs slow, run 
-```powershell
-python -m cProfile day11.py
+Make sure all code runs, there is no output, and all tests pass.
+
+```bash
+uvx ruff format
+for f in $(ls day*.py); do uv run $f; done
+uvx python -m unittest
 ```
 
-## Testing
-At day 14 I needed to run some test code... I do that with `unittest` and standard code convenstions so that `python -m unittest` does the discovery alright.
-
-I have also added the 
-```
-if __name__ == "__main__":
-    unittest.main()
-```
-code so that `python test_dayXX.py` works for running a single file (very nice if your IDE has a 'run this file' feature').
+# Reflections on each day
 
 # Day 14
 

@@ -73,7 +73,20 @@ def rotate(pos, action, argument):
 
 def process(input, mode):
     instructions = ((s[0], int(s[1:])) for s in input.splitlines())
-    initial_state = {"A": (0, 0, 1, 0,), "B": (0, 0, 10, 1,)}
+    initial_state = {
+        "A": (
+            0,
+            0,
+            1,
+            0,
+        ),
+        "B": (
+            0,
+            0,
+            10,
+            1,
+        ),
+    }
     ew, ns, _, _ = reduce(
         partial(navigate, mode=mode), instructions, initial_state[mode]
     )

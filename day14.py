@@ -31,11 +31,11 @@ def processA(input):
 
 def find_collide(addr1, addr2, nbits):
     """Analyze adress colission
-    
+
     addr1 and addr2 are masked adresses referring to a set of actual adresses.
     When writing to the adresses specified by the masked addr1, will that write
     instruction cover the adresses specified by addr2?
-    
+
     If the adress spaces are not disjoint, is the overlap partial or complete?
 
     When the overlap is partial - specify one bit in addr2 that needs to be changed
@@ -65,7 +65,7 @@ def find_collide(addr1, addr2, nbits):
 
 def processB_write(addr1: str, val: int, mem: Dict[str, int]):
     """Takes an address and a value to write into memory
-    
+
     Run once per write instruction in the source file
     """
     nbits = len(addr1)
@@ -103,9 +103,9 @@ def processB(input, nbits):
         instr, arg = line.split(" = ")
         if instr == "mask":
             mask = arg
-            assert (
-                len(mask) == nbits
-            ), "The bit mask don't correspond to the address space given"
+            assert len(mask) == nbits, (
+                "The bit mask don't correspond to the address space given"
+            )
         elif instr[:3] == "mem":
             addr_raw = f"{int(instr[4:-1]):b}".zfill(nbits)
             val = int(arg)
@@ -119,7 +119,7 @@ def processB(input, nbits):
     out = 0
     for k, v in mem.items():
         mult = sum(1 for j in k if j == "X")
-        out += v * 2 ** mult
+        out += v * 2**mult
     return out
 
 

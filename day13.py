@@ -25,9 +25,9 @@ def crt_sieve(ans: Sequence[Tuple[int, int]]) -> int:
         all(x % n == a for a,n in an) == True
 
     """
-    assert (
-        max(starmap(gcd, combinations(map(itemgetter(1), ans), r=2))) == 1
-    ), "Some divisors are not coprime"
+    assert max(starmap(gcd, combinations(map(itemgetter(1), ans), r=2))) == 1, (
+        "Some divisors are not coprime"
+    )
     ans = sorted(ans, key=itemgetter(1), reverse=True)
 
     x, nprods = ans[0]

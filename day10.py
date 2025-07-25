@@ -22,7 +22,7 @@ assert ansA == 2738
 assert len(c) == 0  # there were only 1-diff and 3-diff voltages!
 diffs = starmap(flip(sub), rolling(voltages, 2))
 n_combs = 1
-comb_dict = {1: 2 ** 0, 2: 2 ** 1, 3: 2 ** 2, 4: 2 ** 3 - 1}
+comb_dict = {1: 2**0, 2: 2**1, 3: 2**2, 4: 2**3 - 1}
 for key, grp in groupby(diffs):
     if key == 3:
         # 3-steps are fixed. no freedom to choose here...

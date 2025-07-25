@@ -13,7 +13,6 @@ L.LLLLL.LL
 LLLLLLLLLL
 L.LLLLLL.L
 L.LLLLL.LL"""
-"""variable for the test cases"""
 
 true_input = read_input(11)
 
@@ -21,8 +20,8 @@ dirs = [(-1, -1), (0, -1), (+1, -1), (-1, 0), (+1, 0), (-1, +1), (0, +1), (+1, +
 
 
 def neighbors(r, c):
-    """ Get the neighbors
-    
+    """Get the neighbors
+
     This used to be a list comprehension.
     Swapping to a generator expression made everything slower.
     But going to this list of tuple expression saves 0.5-1 second runtime!
@@ -79,7 +78,6 @@ def statusB(r, c, h, w, state_now):
 
 
 def process(mode, input):
-
     data = {
         (r, c): char
         for r, line in enumerate(input.splitlines())
