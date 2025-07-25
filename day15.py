@@ -2,26 +2,6 @@ from util import read_input
 
 
 def processA(input,to_report=2020):
-    """
-    You catch the airport shuttle and try to book a new flight to your vacation island. 
-    Due to the storm, all direct flights have been cancelled, but a route is available to get around the storm. You take it.
-
-    While you wait for your flight, you decide to check in with the Elves back at the North Pole. 
-    They're playing a memory game and are ever so excited to explain the rules!
-
-    In this game, the players take turns saying numbers. 
-    They begin by taking turns reading from a list of starting numbers (your puzzle input). 
-    Then, each turn consists of considering the most recently spoken number:
-
-    - If that was the first time the number has been spoken, the current player says 0.
-    - Otherwise, the number had been spoken before; the current player announces how many turns apart the number is from when it was previously spoken.
-
-    So, after the starting numbers, each turn results in that player speaking aloud either 0 (if the last number is new) or an age (if the last number is a repeat).
-
-    (The game ends when the Elves get sick of playing or dinner is ready, whichever comes first.)
-
-    Their question for you is: what will be the 2020th number spoken? In the example above, the 2020th number spoken will be 436.
-    """
     starting_numbers = tuple(map(int, input.split(',')))
     last_turn_this_was_spoken = {num: idx + 1 for idx, num in enumerate(starting_numbers[:-1])} # dont include the last number. it gets special treatment.
     prev_unumber = starting_numbers[-1]
@@ -50,19 +30,6 @@ def processA(input,to_report=2020):
 
 
 def processB(input):
-    """
-    Impressed, the Elves issue you a challenge: determine the 30000000th number spoken. For example, given the same starting numbers as above:
-
-    Given 0,3,6, the 30000000th number spoken is 175594.
-    Given 1,3,2, the 30000000th number spoken is 2578.
-    Given 2,1,3, the 30000000th number spoken is 3544142.
-    Given 1,2,3, the 30000000th number spoken is 261214.
-    Given 2,3,1, the 30000000th number spoken is 6895259.
-    Given 3,2,1, the 30000000th number spoken is 18.
-    Given 3,1,2, the 30000000th number spoken is 362.
-
-    Given your starting numbers, what will be the 30000000th number spoken?
-    """
     return processA(input, to_report=30000000)
 
 

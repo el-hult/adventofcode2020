@@ -29,6 +29,12 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 15
+I quite naive solution was fast enough on my hardware. It takes 5 seconds to run at time of writing for part 1 and part 2. The only optimization I did was to have a hashmap of "last spoken when" to avoid keeping this full history in memory a doing slow linear searches in that.
+
+The hashmap feels like it should be slow though, with much overhead. Can we try other data structures instead?
+
+
 # Day 14
 
 Part A was a simple thing. I realized bit operations would make this fast and simple, so I read a line or two on wikipedia and implemented a fast solver. Piece of cake.
