@@ -67,7 +67,3 @@ class TestCollisions(unittest.TestCase):
         self.assertEqual(
             find_collide("1X", "X1", 2), (CollisionResult.partial_cover, 0)
         )
-
-
-if __name__ == "__main__":
-    unittest.main()
