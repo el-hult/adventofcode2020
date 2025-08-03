@@ -29,11 +29,38 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 17
+Day 17 is about running cellular automata in 3D and 4D. At first, I got the wrong answer, and was very confused. After rewriting a bit, making the code simpler (at the cost of a little performance) I got the right answer. Instead of 
+```
+if cell.active and cell.neighbors == 2 or cell.neighbors == 3:
+  cell.stay_active()
+elif cell.inactive and cell.neighbors == 3:
+  cell.become_active()
+```
+
+I had implemented
+
+```
+if cell.active and cell.neighbors == 2 or cell.neighbors == 3:
+  cell.set_active()
+elif cell.inactive and cell.neighbors == 3:
+  cell.set_inactive()
+```
+which was a combination of misunderstanding the rules + implementation bug.
+I was confident in my misunderstanding and my code was so noisy I did not realize it.
+I found out my mistake by writing a more naive implementation, with less code and noise.
+
+**Insight:** Initially, I had a `defaultdict` with boolean values to represent the board, where `state((x,y,z))` what whether the cell at `(x,y,z)` was active or not. Reading online trying to understand the problem I realized that using a simple `set` makes more sense, since I don't really need to store all the `false` entries. This neater API simplified the code a bit, and helped in finding the bug above.
+
+**Insight:** The whole space is mirror symmetric around the z=0-plane, so only half the space needs to be simulated for part one.  In part two, we have mirror symmetry in $w=0$ as well, so here, we should be able to cut runtime by 4 using this trick. I have not made this optimization, since it would make the code uglier.
+
+**Insight:** I recompute the bounds of the simulation in each round, which is possibly ugly, since I iterate the active cells many times. Using a data structure to cache that might speed up the simulation. I did that before, but it is part of why the code got noisy and buggy, so I refrained from doing that now.
+
 # Day 16
 
-I foun this quite fun. The part 1 was simple, because the most naive solution was fast enough. Just step through the tickets and ruls and check everything. No need to be clever.
+I found this quite fun. The part 1 was simple, because the most naive solution was fast enough. Just step through the tickets and rules and check everything. No need to be clever.
 
-Part 2 I solved in steps. I realized we are to find an allocation of field names to columns, and we have rules based on observed tickets that makes certain allocations impossible. This is a permutation, and permutations can be shown as a matrix with 0/1 entries. I computed the matrix where a 0 means this row (field name) cannot be allocated to this columnd (field number). A 1 meant 'maybe', and I must try what allocations are compatible with this. I created a DFS search to just brute my way through the possible allocations. To be more concrete: in the matrix below, how can you flip 1s to 0s, so that in the end every row and every column as exactly one 1?
+Part 2 I solved in steps. I realized we are to find an allocation of field names to columns, and we have rules based on observed tickets that makes certain allocations impossible. This is a permutation, and permutations can be shown as a matrix with 0/1 entries. I computed the matrix where a 0 means this row (field name) cannot be allocated to this column (field number). A 1 meant 'maybe', and I must try what allocations are compatible with this. I created a DFS search to just brute my way through the possible allocations. To be more concrete: in the matrix below, how can you flip 1s to 0s, so that in the end every row and every column as exactly one 1?
 ```
 [[0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0],
  [0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0],
@@ -58,7 +85,7 @@ Part 2 I solved in steps. I realized we are to find an allocation of field names
 ```
 
 Solving this with DFS, starting at the first row, going down, was too slow. I realized that I should start with allocating rows that are constrained more (some rows have very few 1s) so that early allocations are more likely to be correct.
-So I sorted my "potential allocations" matric by the number of 1's in each row and foun that this heuristic was great!
+So I sorted my "potential allocations" matrix by the number of 1's in each row and found that this heuristic was great!
 
 ```
 [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -82,17 +109,19 @@ So I sorted my "potential allocations" matric by the number of 1's in each row a
  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 ```
-This reveals that every row has only one more 1 than the row above it, and all the other 1s are in the same column as above. So greedy allocation will work, and no backtracking needed!
-This solution was super fast, and I am happy with this insight.
+Sorting revealed that every row has only one more 1 than the row above it, and all the other 1s are in the same column as above. So greedy allocation will work, and no backtracking needed!
+This solution was super fast, and I am happy with this insight from looking at data.
 
 
 # Day 15
-I quite naive solution was fast enough on my hardware. It takes 6 seconds to run at time of writing for part 1 and part 2. The only optimization I did was to have a hashmap of "last spoken when" to avoid keeping this full history in memory a doing slow linear searches in that.
+My quite naive solution was fast enough on my hardware. It takes 6 seconds to run at time of writing for part 1 and part 2. The only optimization I did was to have a hashmap of "last spoken when" to avoid keeping this full history in memory a doing slow linear searches in that.
 
 The hashmap feels like it should be slow though, with much overhead. Can we try other data structures instead?
 
 Moving to a list instead made the runtime go to 3.6 seconds instead of 6.1 seconds.
 My insight was that the numbers can never be larger than the number of turns I want to check for, so I can allocate all memory in the beginning, and do array lookups instead of hashmap lookups.
+
+I even tried using an array from the `array` module, but this did not improve performance. Those fixed-size arrays are not really faster, just more memory efficient.
 
 
 # Day 14
