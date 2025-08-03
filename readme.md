@@ -36,6 +36,8 @@ Part one, I could implement myself with a simple state machine, because one only
 
 For part two, I read up a little on PRATT parsers, operator climbing, and finally found the shunting yard algorithm. The last one was the simplest, but still solved my problem. Because there are no unary operators, a small simplification was possible. I created the intermediate Reverse Polish Notation expression for debugging as well, even though it was not really needed. I suppose I could have saved a tiny bit of memory there. The algorithm is not terribly interesting, and I cannot say I really learned it. 
 
+With the part_two solver, I could solve part_one with same code by just changing operator precedence, simplifying my code a little.
+
 # Day 17
 Day 17 is about running cellular automata in 3D and 4D. At first, I got the wrong answer, and was very confused. After rewriting a bit, making the code simpler (at the cost of a little performance) I got the right answer. Instead of 
 ```
