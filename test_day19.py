@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-from day19 import part_one, part_two
+from day19 import parse_rules, part_one, part_two, build_regex
 
 test_data_one = """0: 4 1 5
 1: 2 3 | 3 2
@@ -60,12 +60,20 @@ aaaaabbaabaaaaababaa
 aaaabbaaaabbaaa
 aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
 babaaabbbaaabaababbaabababaaab
-aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba
-"""
+aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"""
 
 class TestDay19(TestCase):
     def test_part_one(self):
         self.assertEqual(part_one(test_data_one), 2)
+
+    def test_regex_generation(self):
+        rules = parse_rules(test_data_one)
+        print(rules)
+        self.assertEqual(build_regex(rules, 5), r"b")
+        self.assertEqual(build_regex(rules, 4), r"a")
+        self.assertEqual(build_regex(rules, 3), r"(ab|ba)")
+        self.assertEqual(build_regex(rules, 0), r"a((aa|bb)(ab|ba)|(ab|ba)(aa|bb))b")
+
 
     def test_two_one(self):
         self.assertEqual(part_one(test_input_two), 3)

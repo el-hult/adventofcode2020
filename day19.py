@@ -6,6 +6,7 @@ SEQ = ">"
 ALT = "|"
 
 def parse_rules(raw):
+  extra_id = 100000
   rules = {}
   for line in raw.splitlines():
     line = line.strip()
@@ -25,8 +26,10 @@ def parse_rules(raw):
       assert len(ors) == 2
       alt1 = (">", *map(int, ors[0].split(" ")))
       alt2 = (">", *map(int, ors[1].split(" ")))
-      alts = ("|", alt1, alt2)
-      rules[rule_num] = alts
+      rules[rule_num] = ("|", extra_id, extra_id + 1)
+      rules[extra_id] = alt1
+      rules[extra_id + 1] = alt2
+      extra_id += 2
       continue
 
     seq = tuple(map(int, rhs.split(" ")))
@@ -48,8 +51,8 @@ def build_regex(rules,rule_num: int) -> str:
     return out
   elif rule[0] == ALT:
     assert len(rule) == 3
-    out1 = "".join(build_regex(rules, k) for k in rule[1][1:])
-    out2 = "".join(build_regex(rules, k) for k in rule[2][1:])
+    out1 = build_regex(rules, rule[1])
+    out2 = build_regex(rules, rule[2])
     out = f"({out1}|{out2})"
     return out
   else:
@@ -57,9 +60,9 @@ def build_regex(rules,rule_num: int) -> str:
 
 def part_one(my_input):
   rules = parse_rules(my_input)
+  messages = my_input.split("\n\n")[1].splitlines()
 
   regex = compile("^" + build_regex(rules, 0) + "$")
-  messages = my_input.splitlines()[len(rules) :]
   ans_one = sum(1 for m in messages if regex.match(m))
   return ans_one
 
