@@ -29,6 +29,15 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 19
+
+Part one is about parsing expressions and see if they conform to some grammar.
+The grammar is such that we could create a regex for the whole shebang. 
+It worked great for part one. Probably not very efficient, but still fast enough.
+
+This reminded me of the 0DE5 project, and the videos on regex's and DFAs. 
+This could be a great exercise to implement a regex engine. See e.g. https://www.0de5.net/stimuli/fun-and-games-generating-dfas-from-regular-expressions
+
 # Day 18
 
 This day was about parsing arithmetic expressions, considering operator precedence and parantheses. 
