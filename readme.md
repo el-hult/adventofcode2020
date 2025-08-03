@@ -32,17 +32,25 @@ uvx python -m unittest
 # Day 19
 
 Part one is about parsing expressions and see if they conform to some grammar.
-The grammar is such that we could create a regex for the whole shebang. 
-It worked great for part one. Probably not very efficient, but still fast enough.
+It is given there is no recursion in the grammar, so it is regular, and regexes can solve the problem. 
+It worked great for part one. Probably not very efficient, but still fast enough. I quite a bit of time trying to implement a regex engine myself for this, inspired by https://www.0de5.net/stimuli/fun-and-games-generating-dfas-from-regular-expressions, but eventually I gave up. Too slow. Too complicated. I ended up using the `re` module in python instead. 
 
-This reminded me of the 0DE5 project, and the videos on regex's and finite state machines. 
-This could be a great exercise to implement a regex engine. See e.g. https://www.0de5.net/stimuli/fun-and-games-generating-dfas-from-regular-expressions
+For part two, we get two new production rules. The first one is 
+```
+8: 42 | 42 8
+```
+which we recognize as "one or more 42s", a common thing for regexes to find using the `+` operator.
 
-For part two, the grammar may contain loops, so constructing a regex naively using DFS is not possible anymore.
-It seems the grammar is still regular, so if only we can construct the finite state machine that would evaluate the matching, it should work.
+The second new rule is
+```
+11: 42 31 | 42 11 31
+```
+and this is not a acceptable form in a regular grammar. In a regular grammar, the nonterminal symbols must be on the left or on the right hand side in the production rules, and while 42 and 31 can be replaced by terminal symbols (due to the tree-structure in the grammar), the precence of the 11 in the middle ruins everything.
 
-I started creating a state machine matcher according to the design in 0DE5, but either it was too slow (in python) or I made mistakes in implementatino, so that became a dead end. I scrapped it. Looking closer at the problem, I realize that the only change to the problem should be adding a `+` to the regex for the rules 8 and 11. lets try!
-I failed on first attempt, and scrapped the progress again, now implementing unit tests for the examples in the problem description.
+To solve this, I realized that the rule `0: 8 11` makes things easier. It is enough to see if the message has `m` `42`s and `n` `31`s, where `m >= n + 1`. 
+I tried doing this greedily, and that worked. If we were unlucky, we might have to try to parse some `m' < m` `42`s in case `42` and `31` have overlapping patterns. 
+But I did not have to do that.
+To parse the `31` and `42` patterns, I just used the same regexes as before.
 
 
 # Day 18

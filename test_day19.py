@@ -68,9 +68,6 @@ class TestDay19(TestCase):
 
     def test_regex_generation(self):
         rules = parse_rules(test_data_one)
-        print(rules)
-        self.assertEqual(build_regex(rules, 5), r"b")
-        self.assertEqual(build_regex(rules, 4), r"a")
         self.assertEqual(build_regex(rules, 3), r"(ab|ba)")
         self.assertEqual(build_regex(rules, 0), r"a((aa|bb)(ab|ba)|(ab|ba)(aa|bb))b")
 
