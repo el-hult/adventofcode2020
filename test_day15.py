@@ -1,6 +1,7 @@
 from day15 import processA
+from unittest import TestCase
 
-class TestProcessA:
+class TestProcessA(TestCase):
     def testProcessA(self):
         """
         For example, suppose the starting numbers are 0,3,6:
@@ -30,3 +31,8 @@ class TestProcessA:
     assert processA("2,3,1") == 78
     assert processA("3,2,1") == 438
     assert processA("3,1,2") == 1836
+
+
+if __name__ == "__main__":
+    from unittest import main
+    main()
