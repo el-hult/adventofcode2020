@@ -35,8 +35,15 @@ Part one is about parsing expressions and see if they conform to some grammar.
 The grammar is such that we could create a regex for the whole shebang. 
 It worked great for part one. Probably not very efficient, but still fast enough.
 
-This reminded me of the 0DE5 project, and the videos on regex's and DFAs. 
+This reminded me of the 0DE5 project, and the videos on regex's and finite state machines. 
 This could be a great exercise to implement a regex engine. See e.g. https://www.0de5.net/stimuli/fun-and-games-generating-dfas-from-regular-expressions
+
+For part two, the grammar may contain loops, so constructing a regex naively using DFS is not possible anymore.
+It seems the grammar is still regular, so if only we can construct the finite state machine that would evaluate the matching, it should work.
+
+I started creating a state machine matcher according to the design in 0DE5, but either it was too slow (in python) or I made mistakes in implementatino, so that became a dead end. I scrapped it. Looking closer at the problem, I realize that the only change to the problem should be adding a `+` to the regex for the rules 8 and 11. lets try!
+I failed on first attempt, and scrapped the progress again, now implementing unit tests for the examples in the problem description.
+
 
 # Day 18
 
