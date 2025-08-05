@@ -13,7 +13,7 @@ for i in $(seq 1 24); do j=$(printf "%02d" $i); curl --cookie "session=somelongv
 Then run code using e.g. `uv run day01.py`. It should be silent if it is correct to my output.
 
 If you want timing for each run, in bash you can run
-```
+```bash
 for f in day*.py; do t=$( { time uv run "$f" >/dev/null; } 2>&1 | grep real | awk '{print $2}'); echo -e "$f\t$t"; done
 ```
 
@@ -28,6 +28,15 @@ uvx python -m unittest
 ```
 
 # Reflections on each day
+
+# Day 20
+Part one is about filling a square grid with tiles, like a jigsaw puzzle. Each tile can be rotated and flipped. I do this brute force.
+Some minor optimizations were implemented. To keep the branching factor small, I did DFS with filling in row major order. A lot of expensive python copy operations. :(
+
+In part 2 I need to do some simple pattern recognition. I assumed no sea monsters overlap, and that worked.
+I also assum there is only one orientation of the image where there are any sea monsters, so I can try all 8 orientations and just work with the first one with any sea monster.
+
+Overall, this day was not really hard for me, but it took a lot of code, and I had a bunch of bugs related to my implementation rather than the algorithm I chose.
 
 # Day 19
 
