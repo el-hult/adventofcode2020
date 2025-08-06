@@ -29,6 +29,39 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 21
+This day is about logical inference. We need to deduce allocation from allergens to ingredients.
+Each allergen is found in exactly one ingredient.
+Each ingredient contains zero or one allergen.
+An food item may have undeclared allergens.
+I will assume that all allergens are present at least once in the input -- otherwise the problem is not well defined.
+So the three foods could be listed as
+
+A B C     (contains peanuts, fish)
+A   C D
+A B   D   (contains peanuts, lactose, soy)
+A       E
+
+
+My first attempt was to just see if the input permitted a more naive solution, analyzing one allergen at a time.
+From the above example, we could take each allergen and see what ingredients it could potentially come from. Considering 'peanuts', the first line says it is in either A, B or C. Food 2 does not contradict that.
+Food 3 tells us peanuts is in either A, B or D. We take the intersection of these lists to find peanuts must be in A or B. We can also conclude that C and D cannot contain peanuts, since they show up in a list where peanuts is declared, but not in every list where peanuts is declared.
+From food 3 we find that A, B and D all contain some allergen, but not fish. So fish must be in C, considering food 1 again.
+We can also -- from food 1 and 2 -- deduce that A, B, C and D all contain allergens, and thre are in total 4 allergens. So E must be free from allergens.
+Part one of the day 21 is to find all ingredients that do not contain allergens, and count their number of occurences..
+
+Solving the full problem of allocations reminds me of sudoku... Allocating numbers to cells, and the boxes/rows/columns make it possible to exclude certain allocations.
+The systematic way to solve this kind of problem is to cast it as a SAT problem. But SAT solving is esseentially exhaustive search with good heuristic identification that can cut down the search space. I suppose a specialized solver will be better in this problem instance, instead of casting it as a generic SAT problem...
+
+For part one, it was enough to consider each allergen independently; check per allergen what the intersection of the possible ingredients are, to create a candidate set of ingredients per allergen.
+The ingredients that don't show up there must not contain allergens, so we can count them. This was enough for my specific input.
+
+With this candidate list, we can brute force test all solutions; there is 8 allergens with only a few possible ingredients each.
+But looking at the data again, we can see a greedy allocation will be enough!
+One allergen had a single candidate ingredient.
+Then we can exclude that ingredient from the allocation lists of the other allergens.
+Repeating that that process, one allocation at a time, solves the problem.
+
 # Day 20
 Part one is about filling a square grid with tiles, like a jigsaw puzzle. Each tile can be rotated and flipped. I do this brute force.
 Some minor optimizations were implemented. To keep the branching factor small, I did DFS with filling in row major order. A lot of expensive python copy operations. :(
