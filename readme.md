@@ -29,6 +29,14 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 24
+
+A cellular automaton on hexagonal grid. Same algorithm as day 17. But much smaller space to run on. Generally just simpler problem.
+Only tricky thing is you need some sort of coordinate system on hexagonal grids. There is a few in the litterature I knew about. I decided to use the 'cubical' coordinate system, and just implemented everyghing quite naively. 
+
+Only thing is I only tracked the black tiles (like in day 17) since I don't really know what the size of the grid will be, not do I know if it will be dense or sparse, so it was a starting point. 
+It was fast enough for my needs, so I kept it like that.
+
 # Day 23
 
 In day 23, we need to rearrange a bunch of objects many times, organized in a circular buffer. Task two is just a larger version of task 1.
