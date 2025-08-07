@@ -29,6 +29,15 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 25
+
+I just brute forced this. In python. Seems like a scam. Did laptops improve this much since 2020? It is barely five years ago.
+It was important that I used no function calls, because that overhead was too much.
+I also did the modulus operation at every step in iteration, to ensure there were no intermediary values that grow super large. Python has large int support, so no overflow issues, but time complexity of multiplication is not that great as numbers increase in size.
+Trying different loop sizes, it was important to not recalculate from the start every time, since that would make the time complexity quadratic in the number of loop sizes to try. 
+
+There probably is some clever maths on how to do this in a non-brute force way. I did not need to.
+
 # Day 24
 
 A cellular automaton on hexagonal grid. Same algorithm as day 17. But much smaller space to run on. Generally just simpler problem.
