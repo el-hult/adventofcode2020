@@ -14,17 +14,11 @@ Then run code using e.g. `uv run day01.py`. It should be silent if it is correct
 
 If you want timing for each run, in bash you can run
 ```bash
-for f in day*.py; do t=$( { time uv run "$f" >/dev/null; } 2>&1 | grep real | awk '{print $2}'); echo -e "$f\t$t"; done
-```
-
-# Before commit
-
-Make sure all code runs, there is no output, and all tests pass.
-
-```bash
-uvx ruff format
-for f in $(ls day*.py); do uv run $f; done
-uvx python -m unittest
+for f in day*.py; do
+  echo -n "$f runs in "
+  t=$( { time uv run "$f" >/dev/null; } 2>&1 | grep real | awk '{print $2}')
+  echo "$t"
+done
 ```
 
 # Reflections on each day
