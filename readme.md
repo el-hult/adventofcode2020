@@ -29,6 +29,14 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 23
+
+In day 23, we need to rearrange a bunch of objects many times, organized in a circular buffer. Task two is just a larger version of task 1.
+
+If we use an array to manage the circular buffer there will be a lot of copying to do, so I instead use a linked list where each node in the list can hold a value and a pointer to the next node. I use `dataclass` for this, since `namedtuple` is not mutable.
+Creating the linked list was more expensive than actually running my algorithm, so using a single array holding the next-pointers, (that `ptrs[k-1]` would hold the cup to the right of cup number `k`) would give a significant speedup. But the code would be uglier, and I would make mistakes, so it was not my first choice of implementation.
+The dataclass solution was fast enough for now anyways (ca 4 seconds for part 1 and 2 combined).
+
 # Day 22
 
 Part one was just a simple implementation of the game of combat. It was almost trivial.
