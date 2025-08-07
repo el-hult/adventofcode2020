@@ -29,6 +29,22 @@ uvx python -m unittest
 
 # Reflections on each day
 
+# Day 22
+
+Part one was just a simple implementation of the game of combat. It was almost trivial.
+
+Part two also went super smooth. Some tiny optimizations I did from the very start was:
+
+- use a `deque[int]` for the player decks to get O(1) pop from the left. In the normal game of Combat, this was a tiny optimization, but seems nice, still. In a recusrive game, this was actually a non-optimization! In each recursive game we must slice the hands, and a `deque` cannot be sliced, forcing a conversion to list, which is expensive. Going back to `list[int]` saved me a bunch of time.
+- use a `set` for the of seen states, to stop infitnite recursive games, for quick lookups.
+- only store the hashes of the seen states, in a `set[int]`, which saves memory, a lot of allocations, and thus increases speed quite a bit.
+
+One could worry about recursion depth -- can we implement the game with function call recursion, ot must we explicitly have a stack of ongoing games and use some for loop? The largest card value is smaller than 99, so the maximum recursion depth is smaller than 100, which the python call stack should handle well.
+
+To hash the states I must convert the hands to some hashable type (tuple, not list/deque) and I suspect this is a little costly. 
+In a compiled language I would use some nice data type specific hasher, since I really just need to hash two int streams.
+It is concievable a custom hasher in python could speed up things too. 
+
 # Day 21
 This day is about logical inference. We need to deduce allocation from allergens to ingredients.
 Each allergen is found in exactly one ingredient.
