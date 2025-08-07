@@ -6,7 +6,7 @@ def part_one(raw_input):
   state = set()
   for y, line in enumerate(lines):
     for x, char in enumerate(line):
-      if char == '#':
+      if char == "#":
         state.add((x, y, 0))
 
   for _ in range(6):
@@ -14,13 +14,14 @@ def part_one(raw_input):
 
   return len(state)
 
+
 def step_simulation_3d(state):
   new_state = set()
   cells_to_check = set()
 
   # Check all active cells and their neighbors
   # these spots define what area of the grid we must simulate
-  for x, y, z in state:  
+  for x, y, z in state:
     for dx in (-1, 0, 1):
       for dy in (-1, 0, 1):
         for dz in (-1, 0, 1):
@@ -37,13 +38,13 @@ def step_simulation_3d(state):
           neighbor = (x + dx, y + dy, z + dz)
           if neighbor in state:
             n_active_neighbors += 1
-    
+
     # Apply the rules
     if (x, y, z) in state and n_active_neighbors in (2, 3):
       new_state.add((x, y, z))
     elif (x, y, z) not in state and n_active_neighbors == 3:
       new_state.add((x, y, z))
-    
+
   return new_state
 
 
@@ -52,7 +53,7 @@ def step_simulation_4d(state):
   cells_to_check = set()
 
   # Check all active cells and their neighbors
-  for x, y, z, w in state:  
+  for x, y, z, w in state:
     for dx in (-1, 0, 1):
       for dy in (-1, 0, 1):
         for dz in (-1, 0, 1):
@@ -72,22 +73,23 @@ def step_simulation_4d(state):
             neighbor = (x + dx, y + dy, z + dz, w + dw)
             if neighbor in state:
               n_active_neighbors += 1
-    
+
     # Apply the rules
     if (x, y, z, w) in state and n_active_neighbors in (2, 3):
       new_state.add((x, y, z, w))
     elif (x, y, z, w) not in state and n_active_neighbors == 3:
       new_state.add((x, y, z, w))
-    
+
   return new_state
+
 
 def part_two(raw_input):
   lines = raw_input.splitlines()
   state = set()
   for y, line in enumerate(lines):
     for x, char in enumerate(line):
-      if char == '#':
-        state.add((x,  y, 0, 0))
+      if char == "#":
+        state.add((x, y, 0, 0))
 
   for _ in range(6):
     state = step_simulation_4d(state)
@@ -100,7 +102,7 @@ test_input = """.#.
 ###
 """
 res = part_one(test_input)
-assert  res == 112, f"Test failed, expected 112 but got {res}"
+assert res == 112, f"Test failed, expected 112 but got {res}"
 
 
 my_input = read_input(17)

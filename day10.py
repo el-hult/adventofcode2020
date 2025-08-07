@@ -24,12 +24,12 @@ diffs = starmap(flip(sub), rolling(voltages, 2))
 n_combs = 1
 comb_dict = {1: 2**0, 2: 2**1, 3: 2**2, 4: 2**3 - 1}
 for key, grp in groupby(diffs):
-    if key == 3:
-        # 3-steps are fixed. no freedom to choose here...
-        continue
-    else:
-        # the longest chunk is 4, so i have precomputed the number of choices possible
-        grp_len = sum(1 for _ in grp)
-        n_combs *= comb_dict[grp_len]
+  if key == 3:
+    # 3-steps are fixed. no freedom to choose here...
+    continue
+  else:
+    # the longest chunk is 4, so i have precomputed the number of choices possible
+    grp_len = sum(1 for _ in grp)
+    n_combs *= comb_dict[grp_len]
 ansB = n_combs
 assert ansB == 74049191673856

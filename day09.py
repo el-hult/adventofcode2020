@@ -7,12 +7,12 @@ data = [int(line) for line in data.splitlines()]
 preamble_len = 25
 
 for k in range(preamble_len, len(data)):
-    ss = (a + b for a, b in combinations(data[k - preamble_len : k], r=2))
-    if data[k] in ss:
-        continue
-    else:
-        ansA = data[k]
-        break
+  ss = (a + b for a, b in combinations(data[k - preamble_len : k], r=2))
+  if data[k] in ss:
+    continue
+  else:
+    ansA = data[k]
+    break
 
 assert ansA != 35
 assert ansA == 400480901
@@ -21,13 +21,13 @@ assert ansA == 400480901
 searching = True
 m = 1
 while searching:
-    m += 1
-    for k in rolling(data, m):
-        s = sum(k)
-        if s == ansA:
-            ansB = min(k) + max(k)
-            searching = False
-            break
+  m += 1
+  for k in rolling(data, m):
+    s = sum(k)
+    if s == ansA:
+      ansB = min(k) + max(k)
+      searching = False
+      break
 
 assert ansB < 800961802
 assert ansB == 67587168

@@ -10,11 +10,11 @@ linewidth = len(lines[0])
 ans_a = sum(line[(3 * i) % linewidth] == "#" for i, line in enumerate(lines))
 
 ans_b = prod(
-    sum(
-        line[(right * i) % linewidth] == "#"
-        for i, line in enumerate(islice(lines, None, None, down))
-    )
-    for right, down in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+  sum(
+    line[(right * i) % linewidth] == "#"
+    for i, line in enumerate(islice(lines, None, None, down))
+  )
+  for right, down in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
 )
 
 assert ans_a == 153

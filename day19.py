@@ -4,6 +4,7 @@ import re
 SEQ = ">"
 ALT = "|"
 
+
 def parse_rules(raw):
   extra_id = 100000
   rules = {}
@@ -36,7 +37,8 @@ def parse_rules(raw):
 
   return rules
 
-def build_regex(rules,rule_num: int) -> str:
+
+def build_regex(rules, rule_num: int) -> str:
   """Compute the regex for a rule number."""
   rule = rules[rule_num]
   if isinstance(rule, str):
@@ -55,6 +57,7 @@ def build_regex(rules,rule_num: int) -> str:
   else:
     raise ValueError(f"Unknown rule type {rule[0]} for rule {rule_num}")
 
+
 def part_one(my_input):
   rules = parse_rules(my_input)
   messages = my_input.split("\n\n")[1].splitlines()
@@ -62,6 +65,7 @@ def part_one(my_input):
   regex = re.compile("^" + build_regex(rules, 0) + "$")
   ans_one = sum(1 for m in messages if regex.match(m))
   return ans_one
+
 
 def part_two(my_input):
   rules = parse_rules(my_input)
@@ -79,14 +83,14 @@ def part_two(my_input):
   for message in messages:
     n_matches_42 = 0
     ptr = 0
-    
+
     matches = re.finditer(pattern42, message)
     for m in matches:
       if m.start() != ptr:
         break
       ptr = m.end()
       n_matches_42 += 1
-    
+
     rest = message[ptr:]
 
     n_matches_31 = 0
@@ -98,10 +102,16 @@ def part_two(my_input):
       ptr = m.end()
       n_matches_31 += 1
 
-    if n_matches_42 > 0 and n_matches_31 > 0 and n_matches_42 > n_matches_31 and ptr == len(rest):
+    if (
+      n_matches_42 > 0
+      and n_matches_31 > 0
+      and n_matches_42 > n_matches_31
+      and ptr == len(rest)
+    ):
       n_good_messages += 1
 
   return n_good_messages
+
 
 def main():
   my_input = read_input(19)
