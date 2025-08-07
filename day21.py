@@ -1,7 +1,6 @@
 from util import read_input
 
 raw = read_input(21)
-print(raw)
 foods = raw.strip().splitlines()
 
 possible_ingredients_by_allergen = {}
@@ -13,17 +12,10 @@ for food in foods:
   allergens = allergens.rstrip(')')
   allergens = set(allergens.split(', '))
   for allergen in allergens:
-    print('Updating allergen:', allergen)
     if allergen not in possible_ingredients_by_allergen:
       possible_ingredients_by_allergen[allergen] = ingredients.copy() # without this copyy, some allergents share the same instance of the ingredients set. That is not right.
     else:
       possible_ingredients_by_allergen[allergen] &= ingredients # ampersand means intersection
-    print(possible_ingredients_by_allergen[allergen])
-
-import pprint
-pprint.pprint(possible_ingredients_by_allergen)
-print(len(all_ingredients))
-print(len(possible_ingredients_by_allergen))
 
 
 
@@ -42,7 +34,6 @@ for food in raw.strip().splitlines():
 
 assert count < 2563, "My first try was wrong due to an implementation error"
 assert count == 2461, "This is the right answer!"
-print(f'Part 1: {count}')
 
 
 # part 2 resolve allocations
@@ -50,7 +41,6 @@ allocations = {}
 while any(len(v)==1 for k,v in possible_ingredients_by_allergen.items()):
   to_allocate = next((k for k,v in possible_ingredients_by_allergen.items() if len(v)==1))
   ingredient = possible_ingredients_by_allergen[to_allocate].pop()
-  print(to_allocate)
   allocations[to_allocate] = ingredient
   for k,v in possible_ingredients_by_allergen.items():
     v -= {ingredient}
@@ -60,4 +50,4 @@ assert len(possible_ingredients_by_allergen) == 0, "There should be no allergens
 canonical_dangerous_ingredient_list = ','.join(
     ingredient for _, ingredient in sorted(allocations.items(), key=lambda x: x[0])
 )
-print(f'Part 2: {canonical_dangerous_ingredient_list}')
+assert canonical_dangerous_ingredient_list == 'ltbj,nrfmm,pvhcsn,jxbnb,chpdjkf,jtqt,zzkq,jqnhd'
